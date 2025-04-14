@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 1) Install Git and any needed basics
-apt-get update && apt-get install -y git
+# # 1) Install Git and any needed basics
+# apt-get update && apt-get install -y git
 
 # Set PROJECT_DIR environment variable if not already set
 if [ -z "${PROJECT_DIR}" ]; then
@@ -14,15 +14,15 @@ fi
 
 # 4) Install dependencies
 cd "$PROJECT_DIR"
-pip install -r requirements.txt
+# pip install -r requirements.txt
 
-# 5) Clone ComfyUI extensions
-# Function to extract repo name from git URL
-get_repo_name() {
-    local git_url=$1
-    # Remove .git extension and get the last part of the URL
-    echo "$git_url" | sed 's/\.git$//' | awk -F'/' '{print $NF}'
-}
+# # 5) Clone ComfyUI extensions
+# # Function to extract repo name from git URL
+# get_repo_name() {
+#     local git_url=$1
+#     # Remove .git extension and get the last part of the URL
+#     echo "$git_url" | sed 's/\.git$//' | awk -F'/' '{print $NF}'
+# }
 
 # Function to clone and checkout a specific commit of a ComfyUI extension
 clone_comfy_extension() {

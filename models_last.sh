@@ -82,9 +82,6 @@ clone_if_not_exists() {
 validate_var "PROJECT_DIR" "/workspace/ComfyUI"
 MODELS_DIR="$PROJECT_DIR/models"
 
-# Install flash-attn
-pip install flash-attn
-
 # RealVisXL V5.0 Lightning
 download_if_not_exists \
     "https://civitai.com/api/download/models/798204?type=Model&format=SafeTensor&size=full&fp=fp16" \
@@ -94,6 +91,11 @@ download_if_not_exists \
 download_if_not_exists \
     "https://huggingface.co/xinsir/controlnet-union-sdxl-1.0/resolve/main/diffusion_pytorch_model_promax.safetensors" \
     "$MODELS_DIR/controlnet/sdxl/diffusion_pytorch_model_promax.safetensors"
+
+# IP-Adapter Plus SDXL
+download_if_not_exists \
+    "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors" \
+    "$MODELS_DIR/ipadapter/ip-adapter-plus_sdxl_vit-h.safetensors"
 
 # CLIP Vision for IP-Adapter SD1.5
 download_if_not_exists \
@@ -105,32 +107,10 @@ download_if_not_exists \
     "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/image_encoder/model.safetensors" \
     "$MODELS_DIR/clip_vision/CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors"
 
-# VitMatte (BiRefNet Ultra V2)
-clone_if_not_exists \
-    "https://huggingface.co/hustvl/vitmatte-small-composition-1k" \
-    "$MODELS_DIR/vitmatte"
-
-# Depth Anything V2
-mkdir -p "$PROJECT_DIR/custom_nodes/comfyui_controlnet_aux/ckpts/depth-anything/Depth-Anything-V2-Small"
-download_if_not_exists \
-    "https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth" \
-    "$PROJECT_DIR/custom_nodes/comfyui_controlnet_aux/ckpts/depth-anything/Depth-Anything-V2-Small/depth_anything_v2_vits.pth"
-
 # Florence-2 Model
 clone_if_not_exists \
     "https://huggingface.co/microsoft/Florence-2-base" \
     "$MODELS_DIR/LLM/Florence-2-base"
-
-# IP-Adapter Plus SDXL
-download_if_not_exists \
-    "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors" \
-    "$MODELS_DIR/ipadapter/ip-adapter-plus_sdxl_vit-h.safetensors"
-
-# IP-Adapter SDXL
-download_if_not_exists \
-    "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter_sdxl_vit-h.safetensors" \
-    "$MODELS_DIR/ipadapter/ip-adapter_sdxl_vit-h.safetensors"
-
 
 #####
 
@@ -153,11 +133,3 @@ download_if_not_exists \
 download_if_not_exists \
     "https://civitai.com/api/download/models/963489?type=Model&format=GGUF&size=pruned&fp=fp8" \
     "$MODELS_DIR/unet/fluxRealistic_ggufFluxRealistic.gguf"
-
-
-echo ""
-echo "Launch ComfyUI:"
-echo "python main.py"
-echo ""
-echo "Kill ComfyUI:"
-echo "pkill -9 -f 'python main.py'"
